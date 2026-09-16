@@ -35,6 +35,13 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: node --check tag/static/app.js
       - run: npm run test:browser
+      - name: Save fictional pilot screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pilot-screenshots
+          path: /tmp/tag-*.png
+          retention-days: 7
       - name: Validate deployment configuration
         env:
           POSTGRES_PASSWORD: disposable-test-only
